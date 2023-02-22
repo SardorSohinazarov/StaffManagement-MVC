@@ -1,0 +1,50 @@
+﻿@using StaffManagement.ViewModel
+@model HomeIndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-deck">
+    @foreach(var staff in Model.Staffs){
+        <div class="card m-3">
+            <div class="card-header">
+                <h3>@staff.Name</h3>
+            </div>
+            <img class="card-img-top" src="~/images/user.png"/>
+            <div class="card-footer text-center">
+                <a asp-controller="home" asp-action="details" asp-route-Id="@staff.Id" class="btn btn-primary">View</a>
+                <a href="#" class="btn btn-primary">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+</div>
+
+@*<head>
+    <h1>
+        Staffs
+    </h1>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var staff in Model.Staffs){
+                <tr>
+                    <td>@staff.Id</td>
+                    <td>@staff.Name</td>
+                    <td>@staff.Department</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+*@
