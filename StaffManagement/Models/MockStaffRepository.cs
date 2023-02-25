@@ -8,10 +8,17 @@
         {
             _staffs = new List<Staff>()
             {
-                new Staff() { Id = 1, Name = "Sardor", Department = "Developer"},
-                new Staff() { Id = 2, Name = "Sarvar", Department = "O'quvchi"},
-                new Staff() { Id = 3, Name = "Sanjar", Department = "O'quvchi"},
+                new Staff() { Id = 1, Name = "Sardor", Department = EDepartments.Sales },
+                new Staff() { Id = 2, Name = "Sarvar", Department = EDepartments.Production},
+                new Staff() { Id = 3, Name = "Sanjar", Department = EDepartments.HR },
             };
+        }
+
+        public Staff Create(Staff staff)
+        {
+            staff.Id = _staffs.Max(x => x.Id) + 1;
+            _staffs.Add(staff);
+            return staff;
         }
 
         public Staff Get(int id)

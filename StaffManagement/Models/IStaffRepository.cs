@@ -5,5 +5,7 @@
         Staff Get(int id);
 
         List<Staff> GetAll();
+
+        Staff Create(Staff staff);
     }
 }
