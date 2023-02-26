@@ -3,48 +3,25 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Staff list";
 }
 
-<div class="card-deck">
+<div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach(var staff in Model.Staffs){
-        <div class="card m-3">
-            <div class="card-header">
+        string photo = "~/images/" + (staff.PhotoFilePath == string.Empty ? "user.png" : staff.PhotoFilePath);
+        <div class="col">   
+            <div class="card col m-3 style="min-width:18rem; max-width:30.5%;">
+            <div class="card-header bg-transparent">
                 <h3>@staff.Name</h3>
             </div>
-            <img class="card-img-top" src="~/images/user.png" asp-append-version="true"/>
-            <div class="card-footer text-center">
+           
+            <img class="card-img-top" src="@photo" asp-append-version="true"/>
+            <div class="card-footer text-center bg-transparent">
                 <a asp-controller="home" asp-action="details" asp-route-Id="@staff.Id" class="btn btn-primary">View</a>
                 <a href="#" class="btn btn-primary">Edit</a>
                 <a href="#" class="btn btn-danger">Delete</a>
             </div>
         </div>
+    </div>
     }
 </div>
-
-@*<head>
-    <h1>
-        Staffs
-    </h1>
-</head>
-
-<body>
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Department</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var staff in Model.Staffs){
-                <tr>
-                    <td>@staff.Id</td>
-                    <td>@staff.Name</td>
-                    <td>@staff.Department</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</body>
-*@

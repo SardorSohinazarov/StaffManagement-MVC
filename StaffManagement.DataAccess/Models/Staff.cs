@@ -15,5 +15,6 @@ namespace StaffManagement.Models
         [Required]
         [Display(Name = "Department")]
         public EDepartments? Department { get; set; }
+        public string PhotoFilePath { get; set; }
     }
 }

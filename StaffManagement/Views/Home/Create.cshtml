@@ -1,10 +1,11 @@
-﻿@model Staff
+﻿@using StaffManagement.ViewModel;
+@model HomeCreateViewModel
 
 @{
     ViewBag.Title = "Create Staff";
 }
 
-<form asp-controller="Home" asp-action="Create" method="post" class="mt-3">
+<form enctype="multipart/form-data" asp-controller="Home" asp-action="Create" method="post" class="mt-3">
     <div class="form-group row">
         <label asp-for="Name" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
@@ -25,6 +26,16 @@
     </div> 
 
     <div class="form-group row">
+        <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input asp-for="Photo" class="form-control custom-file-input" />
+                <label class="custom-file-label">Choose file...</label>
+            </div>
+        </div>
+    </div> 
+
+    <div class="form-group row">
         <div class="col-sm-10">
             <button type="submit" class="btn btn-primary">Create</button>
         </div>
@@ -34,3 +45,14 @@
     </div>  @*xatolarni umumiy chiqaradi*@
 
 </form>
+
+@section Scripts{
+<script>
+    $(document).ready(function(){
+        $('.custom-file-input').on("change",function(){
+            var fileName = $(this).val().split("\\").pop();
+            $(this).next('.custom-file-label').html(fileName);
+        });
+    });
+</script>
+}

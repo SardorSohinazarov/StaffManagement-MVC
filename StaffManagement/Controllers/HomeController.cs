@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using StaffManagement.Models;
 using StaffManagement.ViewModel;
 using System.Diagnostics;
@@ -7,12 +8,15 @@ namespace StaffManagement.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IStaffRepository _staffRepository;
 
         public HomeController(
-            IStaffRepository staffRepository
+            IStaffRepository staffRepository,
+            IWebHostEnvironment webHostEnvironment
             )
         {
+            _webHostEnvironment = webHostEnvironment;
             _staffRepository = staffRepository;
         }
 
@@ -52,11 +56,26 @@ namespace StaffManagement.Controllers
         }
         
         [HttpPost]
-        public IActionResult Create(Staff staff)
+        public IActionResult Create(HomeCreateViewModel staff)
         {
             if(ModelState.IsValid)
             {
-                var newStaff = _staffRepository.Create(staff);
+                string uniqueFileName = string.Empty;
+                if(staff.Photo != null)
+                {
+                    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + staff.Photo.FileName;
+                    string imageFilePath = Path.Combine(uploadFolder, uniqueFileName);
+                    staff.Photo.CopyTo(new FileStream(imageFilePath,FileMode.Create));
+                }
+
+                Staff newStaff = new Staff()
+                {
+                    Name = staff.Name,
+                    Department = staff.Department,
+                    PhotoFilePath = uniqueFileName,
+                };
+                newStaff = _staffRepository.Create(newStaff);
                 return RedirectToAction("Details", new { id = newStaff.Id });
             }
             return View();
